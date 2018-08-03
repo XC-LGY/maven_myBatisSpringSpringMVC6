@@ -1,0 +1,19 @@
+--------------Spring Boot 集成MyBαtis--------------------
+web.xml配制文件已经被SpringBoot处理，无需再次添加。
+--------------引入simple 依赖--------------------
+0、原理：等于说把simple项目拷贝到此项目中了一份，但是还有一些区别。
+	a、使用的还是各自项目中的jar包
+1、simple存在与仓库，或者存在于此工作空间
+2、在pom.xml中引入simple依赖
+3、引入新的依赖后，还需要配置MyBatis，让MyBatis可以扫描到这个依赖下面的Mapper接口（生成接口bean）-》这样才可以在Controller中使用@Autowired自动装配上。
+	上一节的例子中使用的是＠Mapper注解，
+	但是对于已经存在的simple来说， 一个个去添加注解并不合适，因此要换一种新的方式来扫描Mapper接口。
+	修改Application类，添加＠Mapperscan注解。
+4、在application.properties中配制扫描mapper.xml文件【,classpath*:tk/mybatis/**/mapper/*.xml】
+	？？在simple项目中已经扫描，这里可以流省略？？
+5、由于实体类的重名问题，需要重新设计全名规则，然后配制在启动项上面。
+6、其它的就是正常的调用了。
+	创建一个UserService调用UserMapper,
+	Controller就可以调用UserService来获取数据了。
+
+
